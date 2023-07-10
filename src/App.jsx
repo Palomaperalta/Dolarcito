@@ -55,8 +55,8 @@ function App() {
   return (
     <>
       <div className="flex justify-center items-center w-full h-screen bg-[#D6FCE8]">
-        <div className="flex items-center justify-around w-[40rem] h-[30rem] bg-[#FFFFFF] rounded-lg flex-col p-10">
-          <div className="flex justify-between gap-2 w-full ">
+        <div className="flex items-center justify-around w-[40rem] h-[30rem] bg-[#FFFFFF] mx-5 rounded-lg flex-col p-5 md:p-10">
+          <div className="flex justify-between gap-2 w-full mb-3">
             <input
               value={inputValue}
               onChange={handleOnChange}
