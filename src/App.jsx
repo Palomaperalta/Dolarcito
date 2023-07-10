@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Item from "./Item";
 
 const ENDPOINT = "https://www.dolarsi.com/api/api.php?type=valoresprincipales";
 const COTIZACIONES = [
@@ -73,61 +74,17 @@ function App() {
             </button>
           </div>
           <div className="flex justify-between w-full bg-[#02694E] rounded-lg flex-col p-10 gap-2">
-            {loading ? (
+            {loading || loadingEuro ? (
               <span className="text-white">Loading...</span>
             ) : (
-              results.map((result) => {
+              [...results, ...resultEuro].map((result) => {
                 return (
-                  <div
+                  <Item
                     key={result.casa.nombre}
-                    className="grid grid-flow-col auto-cols-fr"
-                  >
-                    <div className="text-white">{result.casa.nombre}</div>
-                    {inputValue && (
-                      <div className="text-white font-bold justify-self-center">
-                        $
-                        {(
-                          parseFloat(result.casa.compra.replace(/,/g, ".")) *
-                          parseFloat(inputValue.replace(/,/g, "."))
-                        ).toFixed(2)}
-                      </div>
-                    )}
-                    <div className="text-white font-bold justify-self-end">
-                      $
-                      {parseFloat(
-                        result.casa.compra.replace(/,/g, ".")
-                      ).toFixed(2)}
-                    </div>
-                  </div>
-                );
-              })
-            )}
-            {loadingEuro ? (
-              <span className="text-white">Loading...</span>
-            ) : (
-              resultEuro.map((result) => {
-                return (
-                  <div
-                    key={result.casa.nombre}
-                    className="grid grid-flow-col auto-cols-fr"
-                  >
-                    <div className="text-white">{result.casa.nombre}</div>
-                    {inputValue && (
-                      <div className="text-white font-bold justify-self-center">
-                        $
-                        {(
-                          parseFloat(result.casa.compra.replace(/,/g, ".")) *
-                          parseFloat(inputValue.replace(/,/g, "."))
-                        ).toFixed(2)}
-                      </div>
-                    )}
-                    <div className="text-white font-bold justify-self-end">
-                      $
-                      {parseFloat(
-                        result.casa.compra.replace(/,/g, ".")
-                      ).toFixed(2)}
-                    </div>
-                  </div>
+                    nombre={result.casa.nombre}
+                    compra={result.casa.compra}
+                    inputValue={inputValue}
+                  ></Item>
                 );
               })
             )}
