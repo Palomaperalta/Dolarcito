@@ -7,13 +7,13 @@ function Item({ nombre, compra, inputValue }) {
         <div className="text-white font-bold justify-self-center">
           $
           {(
-            parseFloat(compra.replace(/,/g, ".")) *
+            parseFloat(compra.toString().replace(/,/g, ".")) *
             parseFloat(inputValue.replace(/,/g, "."))
           ).toFixed(2)}
         </div>
       )}
       <div className="text-white font-bold justify-self-end">
-        ${parseFloat(compra.replace(/,/g, ".")).toFixed(2)}
+        ${parseFloat(compra.toString().replace(/,/g, ".")).toFixed(2)}
       </div>
     </div>
   );

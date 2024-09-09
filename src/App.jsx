@@ -1,20 +1,14 @@
 import { useEffect, useState } from "react";
 import Item from "./Item";
 
-const ENDPOINT = "https://www.dolarsi.com/api/api.php?type=valoresprincipales";
-const COTIZACIONES = [
-  "Dolar Blue",
-  "Dolar Oficial",
-  "Dolar Contado con Liqui",
-  "Dolar Bolsa",
-];
-const ENDOPOINTEURO = "https://www.dolarsi.com/api/api.php?type=euro";
-const COTIZACIONEURO = ["Banco Nación"];
+const ENDPOINT = "https://dolarapi.com/v1/dolares";
+const COTIZACIONES = ["Blue", "Oficial", "Contado con liquidación", "Bolsa"];
+const ENDOPOINTEURO = "https://dolarapi.com/v1/cotizaciones/eur";
 function App() {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const [resultEuro, setResultEuro] = useState([]);
+  const [resultEuro, setResultEuro] = useState({});
   const [loadingEuro, setLoadingEuro] = useState([]);
 
   async function getCotization() {
@@ -22,8 +16,9 @@ function App() {
     const response = await fetch(ENDPOINT);
     const json = await response.json();
     const filteredresults = json.filter((cotizacion) =>
-      COTIZACIONES.some((nombre) => nombre === cotizacion.casa.nombre)
+      COTIZACIONES.some((nombre) => nombre === cotizacion.nombre)
     );
+    console.log(filteredresults);
     setResults(filteredresults);
     setLoading(false);
   }
@@ -31,11 +26,10 @@ function App() {
   async function getCotizationEuro() {
     setLoadingEuro(true);
     const response = await fetch(ENDOPOINTEURO);
-    const json = await response.json();
-    const filteredresulteuro = json.filter((cotizacion) =>
-      COTIZACIONEURO.some((nombre) => nombre === cotizacion.casa.nombre)
-    );
-    setResultEuro(filteredresulteuro);
+    const jsonData = await response.json();
+    console.log(jsonData);
+
+    setResultEuro(jsonData);
     setLoadingEuro(false);
   }
 
@@ -77,12 +71,12 @@ function App() {
             {loading || loadingEuro ? (
               <span className="text-white">Loading...</span>
             ) : (
-              [...results, ...resultEuro].map((result) => {
+              [...results, resultEuro].map((result) => {
                 return (
                   <Item
-                    key={result.casa.nombre}
-                    nombre={result.casa.nombre}
-                    compra={result.casa.compra}
+                    key={result.nombre}
+                    nombre={result.nombre}
+                    compra={result.compra}
                     inputValue={inputValue}
                   ></Item>
                 );
