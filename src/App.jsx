@@ -18,7 +18,6 @@ function App() {
     const filteredresults = json.filter((cotizacion) =>
       COTIZACIONES.some((nombre) => nombre === cotizacion.nombre)
     );
-    console.log(filteredresults);
     setResults(filteredresults);
     setLoading(false);
   }
@@ -27,8 +26,6 @@ function App() {
     setLoadingEuro(true);
     const response = await fetch(ENDOPOINTEURO);
     const jsonData = await response.json();
-    console.log(jsonData);
-
     setResultEuro(jsonData);
     setLoadingEuro(false);
   }
